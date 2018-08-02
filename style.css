@@ -1,0 +1,17 @@
+/* form */
+.formWithValidation .userCoordinates {
+    border: 2px solid #000;
+    padding: 10px;
+    outline: none;
+}
+
+.formWithValidation .searchBtn {
+    border: 2px solid #24a7ff;
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #ffffff;
+    color: #24a7ff;
+    font-weight: 700;
+    outline: none;
+}
+
