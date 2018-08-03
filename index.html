@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="index.js" defer></script>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-   <form class="formWithValidation">
-        <input type="text" placeholder="Введите координаты..." required pattern="^x=[0-9]+$|y=[0-9]+$|x=[0-9]+[,]y=[0-9]+$|y=[0-9]+[,]+x=[0-9]+$" class="userCoordinates" />
+    <form class="formWithValidation">
+        <input type="text" placeholder="Введите координаты..." required pattern="^x=[0-9]+$|y=[0-9]+$|x=[0-9]+[,]y=[0-9]+$|y=[0-9]+[,]+x=[0-9]+$"
+            class="userCoordinates" />
         <input type="submit" value="Поиск" class="searchBtn" />
     </form>
     <div class="result">
-        <p>Ближайшая страна: <span class="resultMessage"></span></p>
+        <p>Ближайшая страна:
+            <span class="resultMessage"></span>
+        </p>
     </div>
 </body>
+
 </html>
