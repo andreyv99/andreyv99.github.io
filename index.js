@@ -10,24 +10,23 @@ var countryNumber = null;
 // on search click events
 form.addEventListener('submit', function (event) {
     event.preventDefault();
-    console.log('clicked on search');
-
+    
     coordinatesInit();
-    findClosestCountry();
-    render();
+    findClosestCountry(userX, userY);
+    render(countries);
 })
 
 // user x and y coordinates initialisation
 function coordinatesInit() {
     if (userCoordinates.value.match(/\x=[0-9]*/)) {
         userX = Number(userCoordinates.value.match(/\x=[0-9]*/)[0].substring(2));
-        console.log((userX));
+        
     } else if (userCoordinates.value.match(/\x=[0-9]*/) == undefined) {
         userX = null
     }
     if (userCoordinates.value.match(/\y=[0-9]*/)) {
         userY = Number(userCoordinates.value.match(/\y=[0-9]*/)[0].substring(2));
-        console.log((userY));
+        
     } else if (userCoordinates.value.match(/\y=[0-9]*/) == undefined) {
         userY = null
     }
@@ -44,36 +43,36 @@ fetch('countries.json')
     });
 
 // finding country function
-function findClosestCountry() {
+function findClosestCountry(x, y) {
     minValue = null;
     countryNumber = null;
-    if (userX && userY) { /*if userX and userY have value*/
-        for (var i = 0; i < countries.length; i++) {
-            let a = Math.sqrt(Math.pow(userX - countries[i].x, 2) + Math.pow(userY - countries[i].y, 2))
-            if (a < minValue || minValue == null) {
-                minValue = a;
+    if (x && y) { /*if userX and userY have value*/
+        for (let i = 0; i < countries.length; i++) {
+            let changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2))
+            if (changingValue < minValue || minValue == null) {
+                minValue = changingValue;
                 countryNumber = i;
             }
         }
     }
 
-    if (userX == null) { /*if userX has not value*/
-        console.log("userX")
-        for (var i = 0; i < countries.length; i++) {
-            let a = Math.abs(userY - countries[i].y);
-            if (a < minValue || minValue == null) {
-                minValue = a;
+    if (x == null) { /*if userX has not value*/
+        
+        for (let i = 0; i < countries.length; i++) {
+            let changingValue = Math.abs(y - countries[i].y);
+            if (changingValue < minValue || minValue == null) {
+                minValue = changingValue;
                 countryNumber = i;
             }
         }
-
     }
-    if (userY == null) { /*if userY has not value*/
-        console.log("userY")
-        for (var i = 0; i < countries.length; i++) {
-            let a = Math.abs(userX - countries[i].x);
-            if (a < minValue || minValue == null) {
-                minValue = a;
+
+    if (y == null) { /*if userY has not value*/
+        
+        for (let i = 0; i < countries.length; i++) {
+            let changingValue = Math.abs(x - countries[i].x);
+            if (changingValue < minValue || minValue == null) {
+                minValue = changingValue;
                 countryNumber = i;
             }
         }
@@ -81,6 +80,6 @@ function findClosestCountry() {
 
 }
 // render result
-function render() {
-    return userResult.textContent = countries[countryNumber].country;
+function render(countriesList) {
+    return userResult.textContent = countriesList[countryNumber].country;
 }
