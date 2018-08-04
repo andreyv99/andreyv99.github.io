@@ -1,35 +1,35 @@
-var form = document.querySelector('.formWithValidation');
-var userCoordinates = form.querySelector('.userCoordinates');
-var userResult = document.querySelector('.resultMessage');
-var countries;
-var userX;
-var userY;
-var minValue = null;
-var countryNumber = null;
+let form = document.querySelector('.formWithValidation');
+let userCoordinates = form.querySelector('.userCoordinates');
+let userResult = document.querySelector('.resultMessage');
+let countries;
 
 // on search click events
 form.addEventListener('submit', function (event) {
     event.preventDefault();
-    
+
     coordinatesInit();
-    findClosestCountry(userX, userY);
-    render(countries);
+
 })
 
 // user x and y coordinates initialisation
 function coordinatesInit() {
+    let userX;
+    let userY;
+
     if (userCoordinates.value.match(/\x=[0-9]*/)) {
         userX = Number(userCoordinates.value.match(/\x=[0-9]*/)[0].substring(2));
-        
+
     } else if (userCoordinates.value.match(/\x=[0-9]*/) == undefined) {
-        userX = null
-    }
+        userX = null;
+    };
     if (userCoordinates.value.match(/\y=[0-9]*/)) {
         userY = Number(userCoordinates.value.match(/\y=[0-9]*/)[0].substring(2));
-        
+
     } else if (userCoordinates.value.match(/\y=[0-9]*/) == undefined) {
-        userY = null
-    }
+        userY = null;
+    };
+
+    findClosestCountry(userX, userY)
 
 }
 
@@ -44,42 +44,28 @@ fetch('countries.json')
 
 // finding country function
 function findClosestCountry(x, y) {
-    minValue = null;
-    countryNumber = null;
-    if (x && y) { /*if userX and userY have value*/
-        for (let i = 0; i < countries.length; i++) {
-            let changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2))
-            if (changingValue < minValue || minValue == null) {
-                minValue = changingValue;
-                countryNumber = i;
-            }
+    
+    let minValue = null;
+    let countryNumber = null;
+    let changingValue;
+
+    for (let i = 0; i < countries.length; i++) {
+        if (x != null && y != null) { /*if userX and userY have value*/
+            changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2))
+        } else if (x == null) { /*if userX has not value*/
+            changingValue = Math.abs(y - countries[i].y);
+        } else if (y == null) { /*if userY has not value*/
+            changingValue = Math.abs(x - countries[i].x);
+        };
+        if (changingValue < minValue || minValue == null) {
+            minValue = changingValue;
+            countryNumber = i;
         }
     }
 
-    if (x == null) { /*if userX has not value*/
-        
-        for (let i = 0; i < countries.length; i++) {
-            let changingValue = Math.abs(y - countries[i].y);
-            if (changingValue < minValue || minValue == null) {
-                minValue = changingValue;
-                countryNumber = i;
-            }
-        }
-    }
-
-    if (y == null) { /*if userY has not value*/
-        
-        for (let i = 0; i < countries.length; i++) {
-            let changingValue = Math.abs(x - countries[i].x);
-            if (changingValue < minValue || minValue == null) {
-                minValue = changingValue;
-                countryNumber = i;
-            }
-        }
-    }
-
+    render(countries, countryNumber)
 }
 // render result
-function render(countriesList) {
+function render(countriesList, countryNumber) {
     return userResult.textContent = countriesList[countryNumber].country;
 }
