@@ -17,15 +17,9 @@ function coordinatesInit() {
 
     if (userCoordinates.value.match(/\x=[0-9]*/)) {
         userX = Number(userCoordinates.value.match(/\x=[0-9]*/)[0].substring(2));
-
-    } else if (userCoordinates.value.match(/\x=[0-9]*/) == undefined) {
-        userX = 0;
     };
     if (userCoordinates.value.match(/\y=[0-9]*/)) {
         userY = Number(userCoordinates.value.match(/\y=[0-9]*/)[0].substring(2));
-
-    } else if (userCoordinates.value.match(/\y=[0-9]*/) == undefined) {
-        userY = 0;
     };
 
     findClosestCountry(userX, userY)
@@ -43,7 +37,8 @@ fetch('countries.json')
 
 // finding country function
 function findClosestCountry(x, y) {
-
+    x = x || 0;
+    y = y || 0;
     let minValue = null;
     let countryNumber = null;
     let changingValue;
@@ -58,6 +53,7 @@ function findClosestCountry(x, y) {
 
     render(countries, countryNumber)
 }
+
 // render result
 function render(countriesList, countryNumber) {
     return userResult.textContent = countriesList[countryNumber].country;
