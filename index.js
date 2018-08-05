@@ -7,13 +7,13 @@ let countries;
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    coordinatesInit();
+    validateUserInput();
 })
 
-function coordinatesInit() {
+function validateUserInput() {
     let userX;
     let userY;
-
+    
     if (userCoordinates.value.match(/\x=[0-9]*/)) {
         userX = Number(userCoordinates.value.match(/\x=[0-9]*/)[0].substring(2));
     };
@@ -21,18 +21,18 @@ function coordinatesInit() {
         userY = Number(userCoordinates.value.match(/\y=[0-9]*/)[0].substring(2));
     };
 
-    findClosestCountry(userX, userY)
+    findClosestCountry(userX, userY, countries)
 }
 
 fetch('countries.json')
-    .then(function (response) {
+    .then(function (response) { 
         return response.json();
     })
     .then(function (json) {
         countries = json.countries.slice();
     });
 
-function findClosestCountry(x, y) {
+function findClosestCountry(x, y, countriesList) {
     x = x || 0;
     y = y || 0;
     let minValue = null;
@@ -40,7 +40,7 @@ function findClosestCountry(x, y) {
     let changingValue;
 
     for (let i = 0; i < countries.length; i++) {
-        changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2));
+        changingValue = Math.sqrt(Math.pow(x - countriesList[i].x, 2) + Math.pow(y - countriesList[i].y, 2));
         if (changingValue < minValue || minValue == null) {
             minValue = changingValue;
             countryNumber = i;
@@ -51,5 +51,5 @@ function findClosestCountry(x, y) {
 }
 
 function renderCountry(countriesList, countryNumber) {
-    return userResult.textContent = countriesList[countryNumber].country;
+    return userResult.textContent = "Ближайшая страна: " + countriesList[countryNumber].country;
 }
