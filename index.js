@@ -8,7 +8,6 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     coordinatesInit();
-
 })
 
 // user x and y coordinates initialisation
@@ -20,13 +19,13 @@ function coordinatesInit() {
         userX = Number(userCoordinates.value.match(/\x=[0-9]*/)[0].substring(2));
 
     } else if (userCoordinates.value.match(/\x=[0-9]*/) == undefined) {
-        userX = null;
+        userX = 0;
     };
     if (userCoordinates.value.match(/\y=[0-9]*/)) {
         userY = Number(userCoordinates.value.match(/\y=[0-9]*/)[0].substring(2));
 
     } else if (userCoordinates.value.match(/\y=[0-9]*/) == undefined) {
-        userY = null;
+        userY = 0;
     };
 
     findClosestCountry(userX, userY)
@@ -44,19 +43,13 @@ fetch('countries.json')
 
 // finding country function
 function findClosestCountry(x, y) {
-    
+
     let minValue = null;
     let countryNumber = null;
     let changingValue;
 
     for (let i = 0; i < countries.length; i++) {
-        if (x != null && y != null) { /*if userX and userY have value*/
-            changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2))
-        } else if (x == null) { /*if userX has not value*/
-            changingValue = Math.abs(y - countries[i].y);
-        } else if (y == null) { /*if userY has not value*/
-            changingValue = Math.abs(x - countries[i].x);
-        };
+        changingValue = Math.sqrt(Math.pow(x - countries[i].x, 2) + Math.pow(y - countries[i].y, 2));
         if (changingValue < minValue || minValue == null) {
             minValue = changingValue;
             countryNumber = i;
