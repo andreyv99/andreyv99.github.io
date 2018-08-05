@@ -10,7 +10,6 @@ form.addEventListener('submit', function (event) {
     coordinatesInit();
 })
 
-// user x and y coordinates initialisation
 function coordinatesInit() {
     let userX;
     let userY;
@@ -23,10 +22,8 @@ function coordinatesInit() {
     };
 
     findClosestCountry(userX, userY)
-
 }
 
-// get data from json
 fetch('countries.json')
     .then(function (response) {
         return response.json();
@@ -35,7 +32,6 @@ fetch('countries.json')
         countries = json.countries.slice();
     });
 
-// finding country function
 function findClosestCountry(x, y) {
     x = x || 0;
     y = y || 0;
@@ -51,10 +47,9 @@ function findClosestCountry(x, y) {
         }
     }
 
-    render(countries, countryNumber)
+    renderCountry(countries, countryNumber)
 }
 
-// render result
-function render(countriesList, countryNumber) {
+function renderCountry(countriesList, countryNumber) {
     return userResult.textContent = countriesList[countryNumber].country;
 }
