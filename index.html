@@ -11,8 +11,14 @@
 </head>
 
 <body>
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h1>Вы ввели неправильные данные!</h1>
+        </div>
+    </div>
     <form class="formWithValidation">
-        <input type="text" placeholder="Введите координаты..." required pattern="^x=[0-9]+$|y=[0-9]+$|x=[0-9]+[,]y=[0-9]+$|y=[0-9]+[,]+x=[0-9]+$" class="userCoordinates" />
+        <input type="text" placeholder="Введите координаты..." required class="userCoordinates" />
         <input type="submit" value="Поиск" class="searchBtn" />
     </form>
     <div class="result">
