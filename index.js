@@ -1,8 +1,6 @@
 let form = document.querySelector('.formWithValidation');
 let userCoordinates = form.querySelector('.userCoordinates');
 let userResult = document.querySelector('.resultMessage');
-let modal = document.querySelector(".modal");
-let closeButton = document.querySelector(".close-button");
 let countries;
 
 // on search click events
@@ -11,10 +9,6 @@ form.addEventListener('submit', function (event) {
 
     validateUserInput();
 })
-
-// close modal events
-closeButton.addEventListener("click", openCloseModal);
-window.addEventListener("click", windowOnClick);
 
 function validateUserInput() {
     let userX;
@@ -29,26 +23,9 @@ function validateUserInput() {
         
         findClosestCountry(userX, userY, countries)
     }else {
-        let modalIsOpen = false;
-        openCloseModal(modalIsOpen);
+        alert("Вы ввели неправильные данные")
     }
 }
-
-function openCloseModal(modalIsOpen) {
-    if(modalIsOpen === false) {
-        modalIsOpen = true;
-        modal.classList.add("show-modal");
-    }else {
-        modal.classList.remove("show-modal");
-    }
-}
-
-function windowOnClick(event) {
-    if (event.target === modal) {
-        modal.classList.remove("show-modal");
-    }
-}
-
 
 fetch('countries.json')
     .then(function (response) { 
